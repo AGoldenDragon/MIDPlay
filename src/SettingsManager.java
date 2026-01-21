@@ -17,6 +17,7 @@ public class SettingsManager {
   private static int currentVolumeLevel;
   private static String currentThemeMode;
   private static int currentBlackberryWifi;
+  private static int currentEqualizerPreset;
 
   public static SettingsManager getInstance() {
     if (instance == null) {
@@ -49,6 +50,7 @@ public class SettingsManager {
     currentShuffleMode = settings.getInt("shuffleMode", Configuration.PLAYER_SHUFFLE_OFF);
     currentVolumeLevel = settings.getInt("volumeLevel", Configuration.PLAYER_MAX_VOLUME);
     currentBlackberryWifi = settings.getInt("blackberryWifi", Configuration.BLACKBERRY_WIFI_ON);
+    currentEqualizerPreset = settings.getInt("equalizerPreset", 0);
   }
 
   private JSONObject getSettingsJSON() {
@@ -168,6 +170,15 @@ public class SettingsManager {
   public void saveBlackberryWifi(int blackberryWifi) throws RecordStoreException {
     saveSetting("blackberryWifi", blackberryWifi);
     currentBlackberryWifi = blackberryWifi;
+  }
+
+  public void saveEqualizerPreset(int preset) throws RecordStoreException {
+    saveSetting("equalizerPreset", preset);
+    currentEqualizerPreset = preset;
+  }
+
+  public int getCurrentEqualizerPreset() {
+    return currentEqualizerPreset;
   }
 
   public void saveThemeColors(JSONObject lightColors, JSONObject darkColors, int selected)

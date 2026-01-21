@@ -255,6 +255,12 @@ public class PlayerGUI implements PlayerListener {
       if (PlayerListener.STARTED.equals(event)) {
         startTimer();
         setStatusByKey(Configuration.PLAYER_STATUS_PLAYING);
+        // Add to history and update statistics
+        Track currentTrack = getCurrentTrack();
+        if (currentTrack != null) {
+          HistoryManager.getInstance().addToHistory(currentTrack);
+          StatisticsManager.getInstance().incrementPlayCount(currentTrack);
+        }
       } else if (PlayerListener.END_OF_MEDIA.equals(event)) {
         handleTrackEnd();
       } else if (PlayerListener.STOPPED.equals(event)

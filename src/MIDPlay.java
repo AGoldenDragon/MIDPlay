@@ -105,6 +105,55 @@ public class MIDPlay extends MIDlet implements CommandListener {
             goToAboutScreen();
           }
         });
+    menuManager.registerAction(
+        Configuration.MENU_HISTORY,
+        new Runnable() {
+          public void run() {
+            goToHistoryScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_QUEUE,
+        new Runnable() {
+          public void run() {
+            goToQueueScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_ALBUMS,
+        new Runnable() {
+          public void run() {
+            goToAlbumsScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_ARTISTS,
+        new Runnable() {
+          public void run() {
+            goToArtistsScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_RADIO,
+        new Runnable() {
+          public void run() {
+            goToRadioScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_EQUALIZER,
+        new Runnable() {
+          public void run() {
+            goToEqualizerScreen();
+          }
+        });
+    menuManager.registerAction(
+        Configuration.MENU_SMART_PLAYLISTS,
+        new Runnable() {
+          public void run() {
+            goToSmartPlaylistsScreen();
+          }
+        });
   }
 
   private void setMenuIcons() {
@@ -114,6 +163,13 @@ public class MIDPlay extends MIDlet implements CommandListener {
     iconMap.put(Configuration.MENU_CHAT, Configuration.chatIcon);
     iconMap.put(Configuration.MENU_SETTINGS, Configuration.settingsIcon);
     iconMap.put(Configuration.MENU_ABOUT, Configuration.infoIcon);
+    iconMap.put(Configuration.MENU_HISTORY, Configuration.musicIcon);
+    iconMap.put(Configuration.MENU_QUEUE, Configuration.playlistIcon);
+    iconMap.put(Configuration.MENU_ALBUMS, Configuration.folderIcon);
+    iconMap.put(Configuration.MENU_ARTISTS, Configuration.folderIcon);
+    iconMap.put(Configuration.MENU_RADIO, Configuration.folderIcon);
+    iconMap.put(Configuration.MENU_EQUALIZER, Configuration.settingsIcon);
+    iconMap.put(Configuration.MENU_SMART_PLAYLISTS, Configuration.playlistIcon);
   }
 
   private void loadIcons() {
@@ -554,6 +610,41 @@ public class MIDPlay extends MIDlet implements CommandListener {
   private void goToChatScreen() {
     ChatScreen chatScreen = new ChatScreen(Lang.tr(Configuration.MENU_CHAT), navigator);
     navigator.forward(chatScreen);
+  }
+
+  private void goToHistoryScreen() {
+    HistoryScreen historyScreen = new HistoryScreen(navigator);
+    navigator.forward(historyScreen);
+  }
+
+  private void goToQueueScreen() {
+    QueueScreen queueScreen = new QueueScreen(navigator);
+    navigator.forward(queueScreen);
+  }
+
+  private void goToAlbumsScreen() {
+    AlbumScreen albumScreen = new AlbumScreen(navigator);
+    navigator.forward(albumScreen);
+  }
+
+  private void goToArtistsScreen() {
+    ArtistScreen artistScreen = new ArtistScreen(navigator);
+    navigator.forward(artistScreen);
+  }
+
+  private void goToRadioScreen() {
+    RadioScreen radioScreen = new RadioScreen(navigator);
+    navigator.forward(radioScreen);
+  }
+
+  private void goToEqualizerScreen() {
+    EqualizerScreen equalizerScreen = new EqualizerScreen(navigator);
+    navigator.forward(equalizerScreen);
+  }
+
+  private void goToSmartPlaylistsScreen() {
+    SmartPlaylistScreen smartPlaylistScreen = new SmartPlaylistScreen(navigator);
+    navigator.forward(smartPlaylistScreen);
   }
 
   private void showExitConfirmation() {

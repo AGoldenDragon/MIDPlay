@@ -11,6 +11,11 @@ public class Configuration {
   public static final String STORAGE_SETTINGS = "storage.settings";
   public static final String STORAGE_FAVORITES = "storage.favorites";
   public static final String STORAGE_TRACKS = "storage.tracks";
+  public static final String STORAGE_HISTORY = "storage.history";
+  public static final String STORAGE_STATISTICS = "storage.statistics";
+  public static final String STORAGE_SEARCH_HISTORY = "storage.search_history";
+  public static final String STORAGE_RADIO = "storage.radio";
+  public static final String STORAGE_RATINGS = "storage.ratings";
 
   public static final String MENU_SEARCH = "menu.search";
   public static final String MENU_FAVORITES = "menu.favorites";
@@ -18,6 +23,13 @@ public class Configuration {
   public static final String MENU_CHAT = "menu.chat";
   public static final String MENU_SETTINGS = "menu.settings";
   public static final String MENU_ABOUT = "menu.about";
+  public static final String MENU_HISTORY = "menu.history";
+  public static final String MENU_QUEUE = "menu.queue";
+  public static final String MENU_ALBUMS = "menu.albums";
+  public static final String MENU_ARTISTS = "menu.artists";
+  public static final String MENU_RADIO = "menu.radio";
+  public static final String MENU_EQUALIZER = "menu.equalizer";
+  public static final String MENU_SMART_PLAYLISTS = "menu.smart_playlists";
 
   public static final String SERVICE_NCT = "NCT";
   public static final String SERVICE_SOUNDCLOUD = "SoundCloud";
@@ -78,6 +90,21 @@ public class Configuration {
 
   public static final int BLACKBERRY_WIFI_OFF = 0;
   public static final int BLACKBERRY_WIFI_ON = 1;
+
+  public static final String[] EQUALIZER_PRESETS = {
+    "Normal", "Rock", "Pop", "Jazz", "Classical", "Hip Hop", "Electronic", "Bass Boost"
+  };
+
+  public static final String SMART_PLAYLIST_MOST_PLAYED = "smart.most_played";
+  public static final String SMART_PLAYLIST_RECENTLY_PLAYED = "smart.recently_played";
+  public static final String SMART_PLAYLIST_RECENTLY_ADDED = "smart.recently_added";
+  public static final String SMART_PLAYLIST_TOP_RATED = "smart.top_rated";
+  public static final String[] ALL_SMART_PLAYLIST_TYPES = {
+    SMART_PLAYLIST_MOST_PLAYED,
+    SMART_PLAYLIST_RECENTLY_PLAYED,
+    SMART_PLAYLIST_RECENTLY_ADDED,
+    SMART_PLAYLIST_TOP_RATED
+  };
 
   public static Image folderIcon;
   public static Image musicIcon;

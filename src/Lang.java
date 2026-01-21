@@ -47,7 +47,22 @@ public class Lang {
     "timer.actions.stop_playback", "timer.cancel", "timer.confirm.exit", "timer.set",
         "timer.sleep_timer", "timer.status.cancelled", "timer.status.expired",
         "timer.status.remaining", "timer.status.set", "chat.input",
-    "chat.welcome_message", "error.connection"
+    "chat.welcome_message", "error.connection", "menu.history", "menu.queue", "menu.albums",
+        "menu.artists", "menu.radio", "menu.equalizer", "menu.smart_playlists",
+    "history.empty", "history.clear", "history.confirm.clear", "history.status.cleared",
+    "queue.empty", "queue.clear", "queue.remove", "queue.play_from_here",
+        "queue.confirm.clear", "queue.error.cannot_remove_current", "queue.status.cleared",
+        "queue.status.removed",
+    "lyrics.title", "lyrics.not_found", "lyrics.error", "radio.add_station",
+        "radio.remove_station", "radio.no_stations", "radio.station_name",
+    "radio.station_url", "radio.station_genre", "radio.select_station", "radio.confirm.remove",
+        "radio.status.added", "radio.status.removed", "radio.error.empty_name",
+        "radio.error.invalid_url",
+    "equalizer.status.changed", "smart.most_played", "smart.recently_played",
+        "smart.recently_added", "smart.top_rated", "playlist.export", "playlist.import",
+        "playlist.export_text", "playlist.import_text",
+    "playlist.status.exported", "playlist.status.imported", "playlist.error.export_failed",
+        "playlist.error.import_failed"
   };
 
   private static final String[] EN_VALS = {
@@ -91,7 +106,20 @@ public class Lang {
         "Set Timer", "Sleep Timer",
     "Sleep timer cancelled", "Sleep timer expired", "Time Remaining: {0}", "Sleep timer activated",
         "Enter message",
-    "Hello! How can I help you today?", "Connection error. Please try again"
+    "Hello! How can I help you today?", "Connection error. Please try again", "History", "Queue",
+        "Albums", "Artists", "Radio", "Equalizer", "Smart Playlists",
+    "No history yet", "Clear History", "Clear all history?", "History cleared",
+    "Queue is empty", "Clear Queue", "Remove Track", "Play From Here", "Clear entire queue?",
+        "Cannot remove currently playing track", "Queue cleared", "Track removed from queue",
+    "Lyrics", "Lyrics not found", "Failed to load lyrics", "Add Station", "Remove Station",
+        "No radio stations", "Station Name",
+    "Station URL", "Genre", "Select a station to remove", "Remove station", "Station added",
+        "Station removed", "Station name cannot be empty", "Invalid URL",
+    "Equalizer preset changed to", "Most Played", "Recently Played", "Recently Added",
+        "Top Rated (4+ stars)", "Export Playlist", "Import Playlist", "Export as Text",
+        "Import from Text",
+    "Playlist exported", "Playlist imported", "Failed to export playlist",
+        "Failed to import playlist"
   };
 
   private static final String[] HE_VALS = {

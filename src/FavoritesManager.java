@@ -296,4 +296,67 @@ public class FavoritesManager {
     result.setHasMore(false);
     return result;
   }
+
+  public String exportPlaylist(Playlist playlist) {
+    if (playlist == null || !playlist.isCustom()) {
+      return null;
+    }
+    try {
+      JSONObject exportData = new JSONObject();
+      exportData.put("playlist", playlist.toJSON());
+
+      Tracks tracks = getCustomPlaylistTracks(playlist);
+      if (tracks != null && tracks.getTracks() != null) {
+        JSONArray tracksArray = new JSONArray();
+        Track[] trackArray = tracks.getTracks();
+        for (int i = 0; i < trackArray.length; i++) {
+          tracksArray.add(trackArray[i].toJSON());
+        }
+        exportData.put("tracks", tracksArray);
+      }
+
+      return exportData.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public boolean importPlaylist(String importData) {
+    if (importData == null || importData.trim().length() == 0) {
+      return false;
+    }
+    try {
+      JSONObject json = JSON.getObject(importData);
+      Playlist playlist = new Playlist().fromJSON(json.getObject("playlist").toString());
+
+      if (playlist == null) {
+        return false;
+      }
+
+      // Generate new ID to avoid conflicts
+      playlist.setId(System.currentTimeMillis());
+
+      // Add playlist
+      if (addPlaylist(playlist) == FAILED) {
+        return false;
+      }
+
+      // Add tracks if present
+      if (json.has("tracks")) {
+        JSONArray tracksArray = json.getArray("tracks");
+        for (int i = 0; i < tracksArray.size(); i++) {
+          Track track = new Track().fromJSON(tracksArray.getObject(i).toString());
+          if (track != null) {
+            addTrackToPlaylist(playlist, track);
+          }
+        }
+      }
+
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

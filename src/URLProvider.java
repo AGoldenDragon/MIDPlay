@@ -108,5 +108,42 @@ public class URLProvider {
     return urlBuffer.toString();
   }
 
+  public static String getLyricsUrl(String artist, String title) {
+    StringBuffer urlBuffer =
+        new StringBuffer(SERVICE_URL)
+            .append("/lyrics?")
+            .append("artist=")
+            .append(Utils.urlEncode(artist))
+            .append("&title=")
+            .append(Utils.urlEncode(title));
+    return urlBuffer.toString();
+  }
+
+  public static String getAlbums(int pageIndex) {
+    StringBuffer urlBuffer =
+        new StringBuffer(SERVICE_URL)
+            .append("/albums")
+            .append("?page=")
+            .append(pageIndex)
+            .append("&lang=")
+            .append(Lang.getCurrentLang())
+            .append("&service=")
+            .append(settingsManager.getCurrentService());
+    return urlBuffer.toString();
+  }
+
+  public static String getArtists(int pageIndex) {
+    StringBuffer urlBuffer =
+        new StringBuffer(SERVICE_URL)
+            .append("/artists")
+            .append("?page=")
+            .append(pageIndex)
+            .append("&lang=")
+            .append(Lang.getCurrentLang())
+            .append("&service=")
+            .append(settingsManager.getCurrentService());
+    return urlBuffer.toString();
+  }
+
   private URLProvider() {}
 }
