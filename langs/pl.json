@@ -203,6 +203,9 @@
     "empty": "Kolejka jest pusta",
     "history": "Ostatnio odtwarzane",
     "upcoming": "Następne",
+    "now_playing": "Teraz odtwarzane",
+    "in_queue": "W kolejce",
+    "from_playlist": "Z playlisty",
     "status": {
       "added": "Dodano do kolejki",
       "removed": "Usunięto z kolejki",

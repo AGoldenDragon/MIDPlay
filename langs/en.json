@@ -210,6 +210,9 @@
     "empty": "Queue is empty",
     "history": "Recently Played",
     "upcoming": "Up Next",
+    "now_playing": "Now Playing",
+    "in_queue": "In Queue",
+    "from_playlist": "From Playlist",
     "status": {
       "added": "Added to queue",
       "removed": "Removed from queue",

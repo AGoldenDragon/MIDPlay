@@ -22,7 +22,7 @@ public class Lang {
     "status.loading", "status.load_more", "status.no_data", "status.no_updates", "status.update_available", "time.error.invalid_duration", "time.error.invalid_format", "time.minutes", "timer.action", "timer.actions.exit_app",
     "timer.actions.stop_playback", "timer.cancel", "timer.confirm.exit", "timer.set", "timer.sleep_timer", "timer.status.cancelled", "timer.status.expired", "timer.status.remaining", "timer.status.set", "chat.input",
     "chat.welcome_message", "error.connection", "queue.view", "queue.add", "queue.play_next", "queue.clear", "queue.remove", "queue.title", "queue.empty", "queue.history",
-    "queue.upcoming", "queue.status.added", "queue.status.removed", "queue.status.cleared", "queue.confirm.clear"
+    "queue.upcoming", "queue.now_playing", "queue.in_queue", "queue.from_playlist", "queue.status.added", "queue.status.removed", "queue.status.cleared", "queue.confirm.clear"
   };
 
   private static final String[] EN_VALS = {
@@ -54,7 +54,8 @@ public class Lang {
     "Sleep timer cancelled", "Sleep timer expired", "Time Remaining: {0}", "Sleep timer activated", "Enter message",
     "Hello! How can I help you today?", "Connection error. Please try again", "View Queue", "Add to Queue", "Play Next",
     "Clear Queue", "Remove from Queue", "Queue", "Queue is empty", "Recently Played",
-    "Up Next", "Added to queue", "Removed from queue", "Queue cleared", "Clear all tracks from queue?"
+    "Up Next", "Now Playing", "In Queue", "From Playlist", "Added to queue",
+    "Removed from queue", "Queue cleared", "Clear all tracks from queue?"
   };
 
   private static final String[] HE_VALS = {
@@ -86,7 +87,8 @@ public class Lang {
     "קוצב זמן לשינה בוטל", "קוצב זמן לשינה סיים", "הזמן שנותר: {0}", "קוצב זמן לשינה הופעל", "שלח הודעה",
     "שלום! איך אני יכול לעזור היום?", "בעיה בחיבור. אנא נסה שוב", "הצג תור", "הוסף לתור", "נגן הבא",
     "נקה תור", "הסר מהתור", "תור", "התור ריק", "הושמע לאחרונה",
-    "הבא בתור", "נוסף לתור", "הוסר מהתור", "התור נוקה", "למחוק את כל השירים מהתור?"
+    "הבא בתור", "מושמע כעת", "בתור", "מרשימת השמעה", "נוסף לתור",
+    "הוסר מהתור", "התור נוקה", "למחוק את כל השירים מהתור?"
   };
 
   private static final String[] PL_VALS = {
@@ -118,7 +120,8 @@ public class Lang {
     "Odliczanie zatrzymane", "Koniec odliczania", "Pozostało minut: {0}", "Aktywowano odliczanie", "Wprowadź wiadomość",
     "Cześć! Jak mogę ci pomóc", "Brak połączenia. Spróbuj ponownie później.", "Zobacz kolejkę", "Dodaj do kolejki", "Odtwórz następny",
     "Wyczyść kolejkę", "Usuń z kolejki", "Kolejka", "Kolejka jest pusta", "Ostatnio odtwarzane",
-    "Następne", "Dodano do kolejki", "Usunięto z kolejki", "Kolejka wyczyszczona", "Usunąć wszystkie utwory z kolejki?"
+    "Następne", "Teraz odtwarzane", "W kolejce", "Z playlisty", "Dodano do kolejki",
+    "Usunięto z kolejki", "Kolejka wyczyszczona", "Usunąć wszystkie utwory z kolejki?"
   };
 
   private static final String[] TR_VALS = {
@@ -150,7 +153,8 @@ public class Lang {
     "Uyku zamanlayıcısı iptal edildi", "Uyku zamanlayıcısı süresi doldu", "Kalan Süre: {0}", "Uyku zamanlayıcısı etkinleştirildi", "Mesaj girin",
     "Merhaba! Size nasıl yardımcı olabilirim?", "Bağlantı hatası. Lütfen tekrar deneyin", "Kuyruğu Görüntüle", "Kuyruğa Ekle", "Sıradaki Çal",
     "Kuyruğu Temizle", "Kuyruktan Çıkar", "Kuyruk", "Kuyruk boş", "Son Çalınanlar",
-    "Sırada", "Kuyruğa eklendi", "Kuyruktan çıkarıldı", "Kuyruk temizlendi", "Kuyruktaki tüm şarkılar silinsin mi?"
+    "Sırada", "Şimdi Çalıyor", "Kuyrukta", "Çalma Listesinden", "Kuyruğa eklendi",
+    "Kuyruktan çıkarıldı", "Kuyruk temizlendi", "Kuyruktaki tüm şarkılar silinsin mi?"
   };
 
   private static final String[] VI_VALS = {
@@ -182,7 +186,8 @@ public class Lang {
     "Đã hủy hẹn giờ tắt", "Hẹn giờ tắt đã hết thời gian", "Thời gian còn lại: {0}", "Đã kích hoạt hẹn giờ tắt", "Nhập tin nhắn",
     "Xin chào! Tôi có thể giúp gì cho bạn?", "Lỗi kết nối. Vui lòng thử lại", "Xem hàng chờ", "Thêm vào hàng chờ", "Phát tiếp theo",
     "Xóa hàng chờ", "Xóa khỏi hàng chờ", "Hàng chờ", "Hàng chờ trống", "Đã phát gần đây",
-    "Tiếp theo", "Đã thêm vào hàng chờ", "Đã xóa khỏi hàng chờ", "Đã xóa hàng chờ", "Xóa tất cả bài hát trong hàng chờ?"
+    "Tiếp theo", "Đang phát", "Trong hàng chờ", "Từ playlist", "Đã thêm vào hàng chờ",
+    "Đã xóa khỏi hàng chờ", "Đã xóa hàng chờ", "Xóa tất cả bài hát trong hàng chờ?"
   };
 
   private static void l(String code) {

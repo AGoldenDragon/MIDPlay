@@ -6,9 +6,12 @@ import model.Tracks;
 
 public final class QueueScreen extends BaseList {
   private final QueueManager queueManager;
+  private Track currentTrack;
   private Track[] queueTracks;
-  private Track[] historyTracks;
-  private boolean showingQueue = true;
+  private Track[] upNextTracks;
+  private int nowPlayingIndex = -1;
+  private int queueStartIndex = -1;
+  private int upNextStartIndex = -1;
 
   public QueueScreen(Navigator navigator) {
     super(Lang.tr("queue.title"), navigator);
@@ -26,32 +29,76 @@ public final class QueueScreen extends BaseList {
   protected void populateItems() {
     deleteAll();
 
-    if (showingQueue) {
-      // Show upcoming queue
-      setTitle(Lang.tr("queue.upcoming"));
-      if (queueTracks.length == 0) {
-        append(Lang.tr("queue.empty"), null);
-      } else {
-        for (int i = 0; i < queueTracks.length; i++) {
-          append(queueTracks[i].getName(), Configuration.musicIcon);
+    // Get current player state
+    PlayerScreen playerScreen = MIDPlay.getPlayerScreen();
+    if (playerScreen != null) {
+      PlayerGUI playerGUI = playerScreen.getPlayerGUI();
+      currentTrack = playerGUI.getCurrentTrack();
+
+      // Get upcoming tracks from playlist
+      Tracks currentPlaylist = playerGUI.getCurrentTracks();
+      if (currentPlaylist != null && currentPlaylist.getTracks() != null) {
+        int currentIndex = playerGUI.getCurrentIndex();
+        Track[] allTracks = currentPlaylist.getTracks();
+
+        // Calculate how many upcoming tracks from playlist
+        int remainingTracks = allTracks.length - currentIndex - 1;
+        if (remainingTracks > 0) {
+          upNextTracks = new Track[remainingTracks];
+          for (int i = 0; i < remainingTracks; i++) {
+            upNextTracks[i] = allTracks[currentIndex + 1 + i];
+          }
+        } else {
+          upNextTracks = new Track[0];
         }
+      } else {
+        upNextTracks = new Track[0];
       }
     } else {
-      // Show history
-      setTitle(Lang.tr("queue.history"));
-      if (historyTracks.length == 0) {
-        append(Lang.tr("queue.empty"), null);
-      } else {
-        for (int i = 0; i < historyTracks.length; i++) {
-          append(historyTracks[i].getName(), Configuration.musicIcon);
-        }
+      currentTrack = null;
+      upNextTracks = new Track[0];
+    }
+
+    // Section 1: Now Playing
+    if (currentTrack != null) {
+      append("--- " + Lang.tr("queue.now_playing") + " ---", null);
+      nowPlayingIndex = 0;
+      append(currentTrack.getName(), Configuration.musicIcon);
+    }
+
+    // Section 2: In Queue
+    queueTracks = queueManager.getQueue();
+    if (queueTracks.length > 0) {
+      append("", null); // Separator
+      append("--- " + Lang.tr("queue.in_queue") + " ---", null);
+      queueStartIndex = size() - 1;
+      for (int i = 0; i < queueTracks.length; i++) {
+        append(queueTracks[i].getName(), Configuration.musicIcon);
       }
+    }
+
+    // Section 3: Up Next (from playlist)
+    if (upNextTracks.length > 0) {
+      append("", null); // Separator
+      append("--- " + Lang.tr("queue.from_playlist") + " ---", null);
+      upNextStartIndex = size() - 1;
+      // Show first 10 tracks from playlist to avoid long lists
+      int displayCount = Math.min(upNextTracks.length, 10);
+      for (int i = 0; i < displayCount; i++) {
+        append(upNextTracks[i].getName(), Configuration.musicIcon);
+      }
+      if (upNextTracks.length > 10) {
+        append("... +" + (upNextTracks.length - 10) + " " + Lang.tr("status.load_more"), null);
+      }
+    }
+
+    // If nothing to show
+    if (size() == 0) {
+      append(Lang.tr("queue.empty"), null);
     }
   }
 
   private void refresh() {
-    queueTracks = queueManager.getQueue();
-    historyTracks = queueManager.getHistory();
     int index = getSelectedIndex();
     populateItems();
     if (size() > 0) {
@@ -60,6 +107,15 @@ public final class QueueScreen extends BaseList {
       }
       if (index >= size()) {
         index = size() - 1;
+      }
+      // Skip header rows when selecting
+      String text = getString(index);
+      if (text.startsWith("---") || text.equals("")) {
+        if (index < size() - 1) {
+          index++;
+        } else if (index > 0) {
+          index--;
+        }
       }
       setSelectedIndex(index, true);
     }
@@ -71,13 +127,13 @@ public final class QueueScreen extends BaseList {
       return;
     }
 
-    Track selectedTrack = null;
-    if (showingQueue && queueTracks.length > 0 && index < queueTracks.length) {
-      selectedTrack = queueTracks[index];
-    } else if (!showingQueue && historyTracks.length > 0 && index < historyTracks.length) {
-      selectedTrack = historyTracks[index];
+    // Skip headers and separators
+    String text = getString(index);
+    if (text.startsWith("---") || text.equals("") || text.startsWith("...")) {
+      return;
     }
 
+    Track selectedTrack = getTrackAtIndex(index);
     if (selectedTrack == null) {
       return;
     }
@@ -104,6 +160,31 @@ public final class QueueScreen extends BaseList {
     }
   }
 
+  private Track getTrackAtIndex(int index) {
+    // Now Playing section
+    if (nowPlayingIndex >= 0 && index == nowPlayingIndex + 1) {
+      return currentTrack;
+    }
+
+    // In Queue section
+    if (queueStartIndex >= 0 && index > queueStartIndex) {
+      int queueIndex = index - queueStartIndex - 1;
+      if (queueIndex >= 0 && queueIndex < queueTracks.length) {
+        return queueTracks[queueIndex];
+      }
+    }
+
+    // Up Next section
+    if (upNextStartIndex >= 0 && index > upNextStartIndex) {
+      int upNextIndex = index - upNextStartIndex - 1;
+      if (upNextIndex >= 0 && upNextIndex < Math.min(upNextTracks.length, 10)) {
+        return upNextTracks[upNextIndex];
+      }
+    }
+
+    return null;
+  }
+
   protected void handleCommand(Command c, Displayable d) {
     if (c == Commands.queueClear()) {
       clearQueue();
@@ -115,7 +196,7 @@ public final class QueueScreen extends BaseList {
   }
 
   private void clearQueue() {
-    if (showingQueue && queueTracks.length > 0) {
+    if (queueTracks.length > 0) {
       navigator.showConfirmation(
           Lang.tr("queue.confirm.clear"),
           new Runnable() {
@@ -125,33 +206,30 @@ public final class QueueScreen extends BaseList {
               refresh();
             }
           });
-    } else if (!showingQueue && historyTracks.length > 0) {
-      navigator.showConfirmation(
-          Lang.tr("queue.confirm.clear"),
-          new Runnable() {
-            public void run() {
-              queueManager.clearHistory();
-              navigator.showAlert(Lang.tr("queue.status.cleared"), AlertType.CONFIRMATION);
-              refresh();
-            }
-          });
+    } else {
+      navigator.showAlert(Lang.tr("queue.empty"), AlertType.INFO);
     }
   }
 
   private void removeFromQueue() {
-    if (!showingQueue) {
-      navigator.showAlert(Lang.tr("status.error"), AlertType.ERROR);
-      return;
-    }
-
     int selectedIndex = getSelectedIndex();
-    if (selectedIndex < 0 || selectedIndex >= queueTracks.length) {
+    if (selectedIndex < 0) {
       return;
     }
 
-    if (queueManager.removeFromQueue(selectedIndex)) {
-      navigator.showAlert(Lang.tr("queue.status.removed"), AlertType.CONFIRMATION);
-      refresh();
+    // Check if selected item is in the queue section
+    if (queueStartIndex >= 0 && selectedIndex > queueStartIndex) {
+      int queueIndex = selectedIndex - queueStartIndex - 1;
+      if (queueIndex >= 0 && queueIndex < queueTracks.length) {
+        if (queueManager.removeFromQueue(queueIndex)) {
+          navigator.showAlert(Lang.tr("queue.status.removed"), AlertType.CONFIRMATION);
+          refresh();
+        } else {
+          navigator.showAlert(Lang.tr("status.error"), AlertType.ERROR);
+        }
+      } else {
+        navigator.showAlert(Lang.tr("status.error"), AlertType.ERROR);
+      }
     } else {
       navigator.showAlert(Lang.tr("status.error"), AlertType.ERROR);
     }
@@ -163,17 +241,10 @@ public final class QueueScreen extends BaseList {
       return;
     }
 
-    Track selectedTrack = null;
-    if (showingQueue && selectedIndex < queueTracks.length) {
-      selectedTrack = queueTracks[selectedIndex];
-    } else if (!showingQueue && selectedIndex < historyTracks.length) {
-      selectedTrack = historyTracks[selectedIndex];
-    }
-
+    Track selectedTrack = getTrackAtIndex(selectedIndex);
     if (selectedTrack != null) {
       DetailScreen detailScreen = new DetailScreen(selectedTrack, navigator);
       navigator.forward(detailScreen);
     }
   }
-
 }

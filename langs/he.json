@@ -203,6 +203,9 @@
     "empty": "התור ריק",
     "history": "הושמע לאחרונה",
     "upcoming": "הבא בתור",
+    "now_playing": "מושמע כעת",
+    "in_queue": "בתור",
+    "from_playlist": "מרשימת השמעה",
     "status": {
       "added": "נוסף לתור",
       "removed": "הוסר מהתור",

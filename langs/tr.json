@@ -203,6 +203,9 @@
     "empty": "Kuyruk boş",
     "history": "Son Çalınanlar",
     "upcoming": "Sırada",
+    "now_playing": "Şimdi Çalıyor",
+    "in_queue": "Kuyrukta",
+    "from_playlist": "Çalma Listesinden",
     "status": {
       "added": "Kuyruğa eklendi",
       "removed": "Kuyruktan çıkarıldı",

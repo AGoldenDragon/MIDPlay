@@ -203,6 +203,9 @@
     "empty": "Hàng chờ trống",
     "history": "Đã phát gần đây",
     "upcoming": "Tiếp theo",
+    "now_playing": "Đang phát",
+    "in_queue": "Trong hàng chờ",
+    "from_playlist": "Từ playlist",
     "status": {
       "added": "Đã thêm vào hàng chờ",
       "removed": "Đã xóa khỏi hàng chờ",
