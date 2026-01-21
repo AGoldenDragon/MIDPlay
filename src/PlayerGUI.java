@@ -19,6 +19,7 @@ public class PlayerGUI implements PlayerListener {
 
   private final PlayerScreen parent;
   private final SettingsManager settingsManager;
+  private final QueueManager queueManager;
   private Player player;
   private Tracks trackList;
   private int currentTrackIndex;
@@ -33,10 +34,12 @@ public class PlayerGUI implements PlayerListener {
   private Timer mainTimer;
   private TimerTask displayTask;
   private volatile boolean stopped = false;
+  private Track queuedTrack = null;
 
   public PlayerGUI(PlayerScreen parent) {
     this.parent = parent;
     this.settingsManager = SettingsManager.getInstance();
+    this.queueManager = QueueManager.getInstance();
     loadSettings();
     setStatus("");
   }
@@ -519,6 +522,14 @@ public class PlayerGUI implements PlayerListener {
     }
     stopTimer();
     parent.updateDisplay();
+
+    // Add current track to history (unless it came from queue)
+    Track finishedTrack = getCurrentTrack();
+    if (finishedTrack != null && queuedTrack == null) {
+      queueManager.addToHistory(finishedTrack);
+    }
+    queuedTrack = null;
+
     Thread endThread =
         new Thread(
             new Runnable() {
@@ -533,6 +544,9 @@ public class PlayerGUI implements PlayerListener {
                       closePlayer();
                     }
                     play();
+                  } else if (queueManager.hasNext()) {
+                    // Play next track from queue
+                    playNextFromQueue();
                   } else if (hasNextTrack()) {
                     next();
                   } else {
@@ -715,5 +729,70 @@ public class PlayerGUI implements PlayerListener {
         e.printStackTrace();
       }
     }
+  }
+
+  // Queue management methods
+
+  /**
+   * Add a track to play next (top of queue)
+   */
+  public void playNext(Track track) {
+    if (track != null) {
+      queueManager.playNext(track);
+    }
+  }
+
+  /**
+   * Add a track to the end of the queue
+   */
+  public void addToQueue(Track track) {
+    if (track != null) {
+      queueManager.addToQueue(track);
+    }
+  }
+
+  /**
+   * Add multiple tracks to the end of the queue
+   */
+  public void addToQueue(Track[] tracks) {
+    if (tracks != null) {
+      queueManager.addToQueue(tracks);
+    }
+  }
+
+  /**
+   * Get the queue manager instance
+   */
+  public QueueManager getQueueManager() {
+    return queueManager;
+  }
+
+  /**
+   * Play the next track from the queue
+   */
+  private void playNextFromQueue() {
+    Track track = queueManager.getNextTrack();
+    if (track == null) {
+      return;
+    }
+
+    // Mark this track as coming from queue (so we don't add it to history)
+    queuedTrack = track;
+
+    // Add track to history
+    queueManager.addToHistory(track);
+
+    // Create a temporary single-track playlist for this queued track
+    Track[] tempTracks = new Track[] {track};
+    Tracks tempPlaylist = new Tracks();
+    tempPlaylist.setTracks(tempTracks);
+    tempPlaylist.setHasMore(false);
+
+    // Set the playlist and play
+    this.trackList = tempPlaylist;
+    this.currentTrackIndex = 0;
+
+    cleanup();
+    play();
   }
 }

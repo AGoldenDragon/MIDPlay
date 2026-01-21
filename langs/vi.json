@@ -192,5 +192,24 @@
   },
   "error": {
     "connection": "Lỗi kết nối. Vui lòng thử lại"
+  },
+  "queue": {
+    "view": "Xem hàng chờ",
+    "add": "Thêm vào hàng chờ",
+    "play_next": "Phát tiếp theo",
+    "clear": "Xóa hàng chờ",
+    "remove": "Xóa khỏi hàng chờ",
+    "title": "Hàng chờ",
+    "empty": "Hàng chờ trống",
+    "history": "Đã phát gần đây",
+    "upcoming": "Tiếp theo",
+    "status": {
+      "added": "Đã thêm vào hàng chờ",
+      "removed": "Đã xóa khỏi hàng chờ",
+      "cleared": "Đã xóa hàng chờ"
+    },
+    "confirm": {
+      "clear": "Xóa tất cả bài hát trong hàng chờ?"
+    }
   }
 }

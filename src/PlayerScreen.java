@@ -185,6 +185,7 @@ public final class PlayerScreen extends Canvas
       Commands.playerPrevious(),
       Commands.playerStop(),
       Commands.playerVolume(),
+      Commands.queueView(),
       Commands.playerAddToPlaylist(),
       Commands.playerShowPlaylist(),
       Commands.playerRepeat(),
@@ -390,6 +391,8 @@ public final class PlayerScreen extends Canvas
       toggleShuffle();
     } else if (c == Commands.playerVolume()) {
       showVolumeAlert(getPlayerGUI().getVolumeLevel());
+    } else if (c == Commands.queueView()) {
+      showQueue();
     } else if (c == Commands.playerAddToPlaylist()) {
       addCurrentTrackToPlaylist();
     } else if (c == Commands.playerShowPlaylist()) {
@@ -1204,6 +1207,11 @@ public final class PlayerScreen extends Canvas
     TrackListScreen trackListScreen = new TrackListScreen(playlistTitle, currentTracks, navigator);
     trackListScreen.setSelectedIndex(getPlayerGUI().getCurrentIndex(), true);
     navigator.forward(trackListScreen);
+  }
+
+  private void showQueue() {
+    QueueScreen queueScreen = new QueueScreen(navigator);
+    navigator.forward(queueScreen);
   }
 
   private boolean isPlaylistEmpty(Tracks tracks) {

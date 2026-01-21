@@ -192,5 +192,24 @@
   },
   "error": {
     "connection": "Bağlantı hatası. Lütfen tekrar deneyin"
+  },
+  "queue": {
+    "view": "Kuyruğu Görüntüle",
+    "add": "Kuyruğa Ekle",
+    "play_next": "Sıradaki Çal",
+    "clear": "Kuyruğu Temizle",
+    "remove": "Kuyruktan Çıkar",
+    "title": "Kuyruk",
+    "empty": "Kuyruk boş",
+    "history": "Son Çalınanlar",
+    "upcoming": "Sırada",
+    "status": {
+      "added": "Kuyruğa eklendi",
+      "removed": "Kuyruktan çıkarıldı",
+      "cleared": "Kuyruk temizlendi"
+    },
+    "confirm": {
+      "clear": "Kuyruktaki tüm şarkılar silinsin mi?"
+    }
   }
 }

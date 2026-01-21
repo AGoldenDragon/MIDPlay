@@ -192,5 +192,24 @@
   },
   "error": {
     "connection": "Brak połączenia. Spróbuj ponownie później."
+  },
+  "queue": {
+    "view": "Zobacz kolejkę",
+    "add": "Dodaj do kolejki",
+    "play_next": "Odtwórz następny",
+    "clear": "Wyczyść kolejkę",
+    "remove": "Usuń z kolejki",
+    "title": "Kolejka",
+    "empty": "Kolejka jest pusta",
+    "history": "Ostatnio odtwarzane",
+    "upcoming": "Następne",
+    "status": {
+      "added": "Dodano do kolejki",
+      "removed": "Usunięto z kolejki",
+      "cleared": "Kolejka wyczyszczona"
+    },
+    "confirm": {
+      "clear": "Usunąć wszystkie utwory z kolejki?"
+    }
   }
 }

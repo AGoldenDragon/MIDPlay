@@ -136,5 +136,25 @@ public class Commands {
     return get("details.title", Command.ITEM, 2);
   }
 
+  public static Command queueView() {
+    return get("queue.view", Command.SCREEN, 2);
+  }
+
+  public static Command queueAdd() {
+    return get("queue.add", Command.ITEM, 1);
+  }
+
+  public static Command queuePlayNext() {
+    return get("queue.play_next", Command.ITEM, 2);
+  }
+
+  public static Command queueClear() {
+    return get("queue.clear", Command.SCREEN, 3);
+  }
+
+  public static Command queueRemove() {
+    return get("queue.remove", Command.ITEM, 3);
+  }
+
   private Commands() {}
 }

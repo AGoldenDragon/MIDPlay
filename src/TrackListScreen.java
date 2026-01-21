@@ -19,6 +19,8 @@ public final class TrackListScreen extends BaseList {
     this.items = items;
     this.title = title;
     this.playlist = playlist;
+    addCommand(Commands.queueAdd());
+    addCommand(Commands.queuePlayNext());
     addCommand(Commands.playerAddToPlaylist());
     addCommand(Commands.details());
     if (playlist != null && playlist.isCustom()) {
@@ -77,7 +79,11 @@ public final class TrackListScreen extends BaseList {
   }
 
   protected void handleCommand(Command c, Displayable d) {
-    if (c == Commands.playerAddToPlaylist()) {
+    if (c == Commands.queueAdd()) {
+      addToQueue();
+    } else if (c == Commands.queuePlayNext()) {
+      playNext();
+    } else if (c == Commands.playerAddToPlaylist()) {
       addToPlaylist();
     } else if (c == Commands.playlistRemove()) {
       removeFromPlaylist();
@@ -122,5 +128,31 @@ public final class TrackListScreen extends BaseList {
     Track selectedTrack = items.getTracks()[selectedIndex];
     DetailScreen detailScreen = new DetailScreen(selectedTrack, navigator);
     navigator.forward(detailScreen);
+  }
+
+  private void addToQueue() {
+    int selectedIndex = getSelectedIndex();
+    if (selectedIndex < 0 || selectedIndex >= items.getTracks().length) {
+      return;
+    }
+    Track selectedTrack = items.getTracks()[selectedIndex];
+    PlayerScreen playerScreen = MIDPlay.getPlayerScreen();
+    if (playerScreen != null) {
+      playerScreen.getPlayerGUI().addToQueue(selectedTrack);
+      navigator.showAlert(Lang.tr("queue.status.added"), AlertType.CONFIRMATION);
+    }
+  }
+
+  private void playNext() {
+    int selectedIndex = getSelectedIndex();
+    if (selectedIndex < 0 || selectedIndex >= items.getTracks().length) {
+      return;
+    }
+    Track selectedTrack = items.getTracks()[selectedIndex];
+    PlayerScreen playerScreen = MIDPlay.getPlayerScreen();
+    if (playerScreen != null) {
+      playerScreen.getPlayerGUI().playNext(selectedTrack);
+      navigator.showAlert(Lang.tr("queue.status.added"), AlertType.CONFIRMATION);
+    }
   }
 }

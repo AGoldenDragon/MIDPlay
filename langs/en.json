@@ -199,5 +199,24 @@
   },
   "error": {
     "connection": "Connection error. Please try again"
+  },
+  "queue": {
+    "view": "View Queue",
+    "add": "Add to Queue",
+    "play_next": "Play Next",
+    "clear": "Clear Queue",
+    "remove": "Remove from Queue",
+    "title": "Queue",
+    "empty": "Queue is empty",
+    "history": "Recently Played",
+    "upcoming": "Up Next",
+    "status": {
+      "added": "Added to queue",
+      "removed": "Removed from queue",
+      "cleared": "Queue cleared"
+    },
+    "confirm": {
+      "clear": "Clear all tracks from queue?"
+    }
   }
 }
